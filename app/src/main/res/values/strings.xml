@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">opencv_contrib_Test</string>
+    <string name="title_activity_main_application">TestAPP</string>
+    <string name="title_tracker_choice_activity">Tracker List</string>
+</resources>
