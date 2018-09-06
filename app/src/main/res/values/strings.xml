@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">opencv_contrib_Test</string>
     <string name="title_activity_main_application">TestAPP</string>
+    <string name="title_activity_main">haar-like-feature 얼굴인식</string>
+    <string name="title_activity_main2">그레이스케일</string>
+    <string name="title_activity_main3">이미지뷰,터치 이용한 사각형그리기</string>
+    <string name="title_activity_color_detect">컬러블롭디텍팅</string>
+    <string name="title_activity_camshift">CAM-Shift</string>
+    <string name="title_activity_tracker">TrackerAPI on JAVA</string>
+    <string name="title_activity_tracker_jni">TrackerAPI on JNI(C++)</string>
     <string name="title_tracker_choice_activity">Tracker List</string>
 </resources>

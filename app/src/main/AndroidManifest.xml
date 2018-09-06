@@ -49,44 +49,46 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleInstance"
+            android:label="@string/title_activity_main"
             android:screenOrientation="landscape" />
         <activity
             android:name=".Main2Activity"
             android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleInstance"
+            android:label="@string/title_activity_main2"
             android:screenOrientation="landscape" />
         <activity
             android:name=".Main3Activity"
             android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleInstance"
+            android:label="@string/title_activity_main3"
             android:screenOrientation="landscape" />
         <activity
             android:name=".ColorDetectActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleInstance"
+            android:label="@string/title_activity_color_detect"
             android:screenOrientation="landscape" />
         <activity
             android:name=".TrackerActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleInstance"
+            android:label="@string/title_activity_tracker"
             android:screenOrientation="landscape" />
         <activity
             android:name=".CAMShiftActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleInstance"
+            android:label="@string/title_activity_camshift"
             android:screenOrientation="landscape" />
         <activity
             android:name=".TrackerJNIActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleInstance"
+            android:label="@string/title_activity_tracker_jni"
             android:screenOrientation="landscape"/>
         <activity
             android:name=".trackerChoiceActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleInstance"
+            android:label="@string/title_tracker_choice_activity"
             android:screenOrientation="landscape">
         </activity>
     </application>
 
 </manifest>
+
+<!--    android:launchMode="singleInstance"     //의미 없는거 같아서 제거했다.//   -->
