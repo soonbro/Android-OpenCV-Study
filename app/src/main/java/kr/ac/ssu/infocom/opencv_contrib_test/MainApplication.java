@@ -42,6 +42,7 @@ public class MainApplication extends AppCompatActivity{
         list_activity_itemArrayList.add(new list_activity_item("CAMShift", "색상 히스토그램을 이용한 CamShifting"));
         list_activity_itemArrayList.add(new list_activity_item("Tracker API by JAVA", "TrackerAPI 이용"));
         list_activity_itemArrayList.add(new list_activity_item("Tracker API by JNI(C++)", "TrackerAPI 이용 JNI로 성능향상"));
+        list_activity_itemArrayList.add(new list_activity_item("CAMShift2", "Descirbe ROI's detail"));
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         activityListAdapter = new ActivityListAdapter(MainApplication.this,list_activity_itemArrayList);
@@ -78,6 +79,10 @@ public class MainApplication extends AppCompatActivity{
                         break;
                     case 6:
                         intent = new Intent(getApplicationContext(),trackerChoiceActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 7:
+                        intent = new Intent(getApplicationContext(),CAMShiftActivity2.class);
                         startActivity(intent);
                         break;
                 }
