@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,7 +46,7 @@ public class CAMShiftActivity2 extends AppCompatActivity implements CameraBridge
     private boolean backprojMode = false;
     private boolean selectObject = false;   // 네이티브 코드에서 사용됨
     private boolean isDrawingRect = false;
-    private int trackObject = 0;    // 네이티브 코드에서 사용하고 갱신됨 (아마도...)
+    private int trackObject = 0;    // 네이티브 코드에서 사용하고 갱신됨
     private boolean showHist = true;
     //private Point origin;
     private Rect selection;
@@ -75,6 +76,7 @@ public class CAMShiftActivity2 extends AppCompatActivity implements CameraBridge
     public native void camShift(long matAddrInput, long matAddrResult, /*long matAddrImage,*/ int[] rectSelectionArray);
 
 
+    private ImageButton mPushDrawerIb;
     private SlidingDrawer mPushInfoSd;
     private TextView mPushInfoTv;
 
@@ -136,9 +138,11 @@ public class CAMShiftActivity2 extends AppCompatActivity implements CameraBridge
         mOpenCvCameraView.setCameraIndex(0); // front-camera(1),  back-camera(0)
         mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
 
+        mPushDrawerIb = (ImageButton)findViewById(R.id.tracking_drawer_control_ib);
         mPushInfoSd = (SlidingDrawer)findViewById(R.id.tracking_drawer_sd);
         mPushInfoTv = (TextView)findViewById(R.id.tracking_push_tv);
 
+        mPushDrawerIb.bringToFront();
 
     }
 
@@ -242,17 +246,17 @@ public class CAMShiftActivity2 extends AppCompatActivity implements CameraBridge
             if (trackBox != null) {
 
                 Utils.addLineToSB(sb, "ROI center x: ", trackBox.center.x);
-                Log.d(TAG, "onCameraFrame :: ROI center x: " + String.valueOf(trackBox.center.x));
+                //Log.d(TAG, "onCameraFrame :: ROI center x: " + String.valueOf(trackBox.center.x));
                 Utils.addLineToSB(sb, "ROI center y: ", trackBox.center.y);
-                Log.d(TAG, "onCameraFrame :: ROI center y: " + trackBox.center.y);
+                //Log.d(TAG, "onCameraFrame :: ROI center y: " + trackBox.center.y);
                 Utils.addLineToSB(sb, "ROI Width: ", trackBox.size.width);
-                Log.d(TAG, "onCameraFrame :: ROI Width: " + trackBox.size.width);
+                //Log.d(TAG, "onCameraFrame :: ROI Width: " + trackBox.size.width);
                 Utils.addLineToSB(sb, "ROI Height: ", trackBox.size.height);
-                Log.d(TAG, "onCameraFrame :: ROI Height: " + trackBox.size.height);
+                //Log.d(TAG, "onCameraFrame :: ROI Height: " + trackBox.size.height);
                 Utils.addLineToSB(sb, "ROI Rotated: ", trackBox.angle);
-                Log.d(TAG, "onCameraFrame :: ROI Rotated: " + trackBox.angle);
+                //Log.d(TAG, "onCameraFrame :: ROI Rotated: " + trackBox.angle);
                 Utils.addLineToSB(sb, "ROI Size: ", trackBox.size.area());
-                Log.d(TAG, "onCameraFrame :: ROI Size: " + trackBox.size.area());
+                //Log.d(TAG, "onCameraFrame :: ROI Size: " + trackBox.size.area());
 
                 setResultToText(sb.toString());
             }
