@@ -9,4 +9,7 @@
     <string name="title_activity_tracker">TrackerAPI on JAVA</string>
     <string name="title_activity_tracker_jni">TrackerAPI on JNI(C++)</string>
     <string name="title_tracker_choice_activity">Tracker List</string>
+
+    <string name="push_info">ROI Info</string>
+
 </resources>

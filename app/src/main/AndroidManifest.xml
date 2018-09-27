@@ -80,15 +80,18 @@
             android:name=".TrackerJNIActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/title_activity_tracker_jni"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".trackerChoiceActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/title_tracker_choice_activity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".CAMShiftActivity2"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/title_activity_camshift"
+            android:screenOrientation="landscape" >
         </activity>
     </application>
 
-</manifest>
-
-<!--    android:launchMode="singleInstance"     //의미 없는거 같아서 제거했다.//   -->
+</manifest> <!-- android:launchMode="singleInstance"     //의미 없는거 같아서 제거했다.// -->
