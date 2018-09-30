@@ -201,7 +201,6 @@ Java_kr_ac_ssu_infocom_opencv_1contrib_1test_CAMShiftActivity_camShift(JNIEnv *e
     image.copyTo(matResult);
     //cvtColor(image, matResult, CV_BGR2RGBA);
 
-    //TODOxDONE: 여기 잘못된게 분명하다.
 
 }
 
@@ -330,13 +329,10 @@ Java_kr_ac_ssu_infocom_opencv_1contrib_1test_CAMShiftActivity2_camShift(JNIEnv *
             if (backprojMode)
                 cvtColor(backproj, image, COLOR_GRAY2BGR);
             ellipse(image, trackBox, Scalar(0, 0, 255), 3, LINE_AA);
+            //바운딩렉트 추가
+            rectangle(image, trackBox.boundingRect(), Scalar(0, 255, 0), 3, LINE_AA);
 
             tmpTrackBox = trackBox;
-
-
-
-
-            //TODO: float Array로 값을 자바단에 보내줄까?
 
 
         }
@@ -351,9 +347,6 @@ Java_kr_ac_ssu_infocom_opencv_1contrib_1test_CAMShiftActivity2_camShift(JNIEnv *
         bitwise_not(roi, roi);
     }
 
-    //이제 이미지를 보여줘야함
-    //imshow("CamShift Demo", image);
-    //imshow("Histogram", histimg);
     image.copyTo(matResult);
     //cvtColor(image, matResult, CV_BGR2RGBA);
 
@@ -369,11 +362,6 @@ Java_kr_ac_ssu_infocom_opencv_1contrib_1test_CAMShiftActivity2_nativeGetTrackBox
 
     jfloatArray valArray = (env)->NewFloatArray(5);
     RotatedRect trackBox = getTrackBoxVal();
-    /**
-     * TODO: 트랙박스를 글로벌로 하던가 받아오는 함수 만들던가 해서
-     * 값을 받아오고 (위에 대충 구현함) 그걸 JAVA로 보낸다.
-     * 그리고 제대로 주고 받았는지 확인 한 번 해볼 것!
-     */
 
     jfloat *ptrArray = env->GetFloatArrayElements(valArray, 0);
     ptrArray[0] = trackBox.center.x;

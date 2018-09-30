@@ -40,46 +40,25 @@ public class CAMShiftActivity2 extends AppCompatActivity implements CameraBridge
     }
     /////////////////////////////////////////////////////////////////////////
 
-//    private Mat image;
-
     //flags and init setting
-    private boolean backprojMode = false;
+    //private boolean backprojMode = false;
     private boolean selectObject = false;   // 네이티브 코드에서 사용됨
     private boolean isDrawingRect = false;
     private int trackObject = 0;    // 네이티브 코드에서 사용하고 갱신됨
-    private boolean showHist = true;
-    //private Point origin;
+    //private boolean showHist = true;
     private Rect selection;
-    private int vmin = 10, vmax = 256, smin = 30;
+    //private int vmin = 10, vmax = 256, smin = 30;
 
-    private Mat                 mRgba;
-//    private Mat                 mBgr;
-//    private Mat                 hsv;
-//    private Mat                 hue;
-//    private Mat                 frame;
-//    private Mat                 mask;
-//    private Mat                 hist;
-//    private Mat                 histimg = Mat.zeros(100,160, CV_8UC3);
-//    private Mat                 backproj;
-
-    //private Mat matInput;
-    private Mat matResult;
+    private Mat     mRgba;
+    private Mat     matResult;
 
     private boolean paused = false;
 
-
-    private Rect trackWindow;
-    private int hsize = 16;
-    private float hranges[] = {0, 180};
-
-
     public native void camShift(long matAddrInput, long matAddrResult, /*long matAddrImage,*/ int[] rectSelectionArray);
-
 
     private ImageButton mPushDrawerIb;
     private SlidingDrawer mPushInfoSd;
     private TextView mPushInfoTv;
-
 
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
@@ -97,6 +76,7 @@ public class CAMShiftActivity2 extends AppCompatActivity implements CameraBridge
             }
         }
     };
+
 
     private void setResultToToast(final String string) {
         CAMShiftActivity2.this.runOnUiThread(new Runnable() {
@@ -154,7 +134,6 @@ public class CAMShiftActivity2 extends AppCompatActivity implements CameraBridge
 
     float downX, downY;
 
-
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
@@ -171,16 +150,12 @@ public class CAMShiftActivity2 extends AppCompatActivity implements CameraBridge
                 }
                 isDrawingRect = true;
                 selectObject = true;
-                //mSendRectIV.setVisibility(View.VISIBLE);
+
                 int l = (int)(downX < event.getX() ? downX : event.getX());
                 int t = (int)(downY < event.getY() ? downY : event.getY());
                 int r = (int)(downX >= event.getX() ? downX : event.getX());
                 int b = (int)(downY >= event.getY() ? downY : event.getY());
-//                mSendRectIV.setX(l);
-//                mSendRectIV.setY(t);
-//                mSendRectIV.getLayoutParams().width = r - l;
-//                mSendRectIV.getLayoutParams().height = b - t;
-//                mSendRectIV.requestLayout();
+
                 selection.x = l;
                 selection.y = t;
                 selection.width = r - l;
@@ -193,14 +168,9 @@ public class CAMShiftActivity2 extends AppCompatActivity implements CameraBridge
             case MotionEvent.ACTION_UP:
 
                 selectObject = false;
-//                RectF rectF = getTrackingRect(mSendRectIV);
-//                PointF pointF = new PointF(downX / mBgLayout.getWidth(), downY / mBgLayout.getHeight());
-//                RectF pointRectF = new RectF(pointF.x, pointF.y, 0, 0);
-
-                //mSendRectIV.setVisibility(View.INVISIBLE);
                 //selection = new Rect(selection.x, selection.y, selection.width, selection.height); //TODO: 이거 필요없을걸
                 if(selection.width > 0 && selection.height >0)
-                    trackObject = -1; //TODO: 이부분 확인!
+                    trackObject = -1;
                 break;
             default:
                 break;
@@ -212,9 +182,6 @@ public class CAMShiftActivity2 extends AppCompatActivity implements CameraBridge
     @Override
     public void onCameraViewStarted(int width, int height) {
         mRgba = new Mat(height, width, CvType.CV_8UC4);
-//        image = new Mat();
-        //mBgr = new Mat();
-        //hsv = new Mat();
         selection = new Rect();
     }
 
@@ -235,7 +202,7 @@ public class CAMShiftActivity2 extends AppCompatActivity implements CameraBridge
         if ( matResult != null ) matResult.release();
         matResult = new Mat(mRgba.rows(), mRgba.cols(), mRgba.type());
 
-        camShift(mRgba.getNativeObjAddr(), matResult.getNativeObjAddr(), /*image.getNativeObjAddr(),*/ selectedRectWrapper(selection));
+        camShift(mRgba.getNativeObjAddr(), matResult.getNativeObjAddr(), selectedRectWrapper(selection));
 
 
         StringBuffer sb = new StringBuffer();
@@ -244,27 +211,20 @@ public class CAMShiftActivity2 extends AppCompatActivity implements CameraBridge
             RotatedRect trackBox = getTrackBox();
 
             if (trackBox != null) {
-
+                Utils.addLineToSB(sb, "[ROI Info]",null);
+                sb.append("\n");
                 Utils.addLineToSB(sb, "ROI center x: ", trackBox.center.x);
-                //Log.d(TAG, "onCameraFrame :: ROI center x: " + String.valueOf(trackBox.center.x));
                 Utils.addLineToSB(sb, "ROI center y: ", trackBox.center.y);
-                //Log.d(TAG, "onCameraFrame :: ROI center y: " + trackBox.center.y);
-                Utils.addLineToSB(sb, "ROI Width: ", trackBox.size.width);
-                //Log.d(TAG, "onCameraFrame :: ROI Width: " + trackBox.size.width);
-                Utils.addLineToSB(sb, "ROI Height: ", trackBox.size.height);
-                //Log.d(TAG, "onCameraFrame :: ROI Height: " + trackBox.size.height);
-                Utils.addLineToSB(sb, "ROI Rotated: ", trackBox.angle);
-                //Log.d(TAG, "onCameraFrame :: ROI Rotated: " + trackBox.angle);
-                Utils.addLineToSB(sb, "ROI Size: ", trackBox.size.area());
-                //Log.d(TAG, "onCameraFrame :: ROI Size: " + trackBox.size.area());
-
+                Utils.addLineToSB(sb, "ROI Width: ", trackBox.boundingRect().width);
+                Utils.addLineToSB(sb, "ROI Height: ", trackBox.boundingRect().height);
+                sb.append("\n");
+                Utils.addLineToSB(sb, "ellipse Width: ", trackBox.size.width);
+                Utils.addLineToSB(sb, "ellipse Height: ", trackBox.size.height);
+                Utils.addLineToSB(sb, "ellipse Rotated: ", trackBox.angle);
+                Utils.addLineToSB(sb, "ellipse area: ", trackBox.size.area());
                 setResultToText(sb.toString());
             }
         }
-
-
-
-
 
         return matResult;
     }
@@ -348,9 +308,9 @@ public class CAMShiftActivity2 extends AppCompatActivity implements CameraBridge
         return new RotatedRect(new Point(valArray[0], valArray[1]), //센터 좌표
                                 new Size(valArray[2], valArray[3]), //너비, 높이
                                 valArray[4]);   // 회전 각도
+        //사실 원하는 값만 가져오면 되기 때문에 RotatedRect를 굳이 다시 생성하지 않아도 됨.
+
     }
-
-
 
     //////////////////////////////////////////////////////////////////
 

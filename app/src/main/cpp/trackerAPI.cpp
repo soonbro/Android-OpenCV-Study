@@ -61,9 +61,6 @@ Java_kr_ac_ssu_infocom_opencv_1contrib_1test_TrackerJNIActivity_jniTracker(JNIEn
     jfieldID id_trackerType = env->GetFieldID(class_fieldcontrol, "trackerType", "I");
     jint trackerType = env->GetIntField(instance, id_trackerType);
 
-    /**
-     *
-     */
 
 /***********************
  *		프로세스 시작
